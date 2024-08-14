@@ -1,3 +1,5 @@
+package collections;
+
 import java.util.*;
 
 public class Main {
@@ -583,6 +585,7 @@ private static void Has9() {
     TreeSet<Integer> numbers = new TreeSet<>();
    numbers.add(1);
    numbers.add(2);
+   numbers.add(17);
    numbers.add(3);
    numbers.add(4);
    numbers.add(5);
