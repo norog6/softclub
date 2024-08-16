@@ -39,20 +39,13 @@ public class StreamApi {
                 new Student("Alice", Arrays.asList(85, 90, 78), "A"),
                 new Student("Bob", Arrays.asList(70, 65, 75), "B"),
                 new Student("Charlie", Arrays.asList(60, 55, 58), "A"),
-                new Student("David", Arrays.asList(95, 92, 88), "C"),
+                new Student("David", Arrays.asList(95, 92, 88), "B"),
                 new Student("Eva", Arrays.asList(80, 85, 83), "B")
         );
-        List<Transaction> transactions = Arrays.asList(
-                new Transaction("T1", 1500.0, "DEBIT", "2024-08-10T10:15:30", "C1"),
-                new Transaction("T2", 200.0, "CREDIT", "2024-08-11T11:25:40", "C2"),
-                new Transaction("T3", 700.0, "DEBIT", "2024-08-12T12:35:50", "C1"),
-                new Transaction("T4", 50.0, "CREDIT", "2024-08-13T13:45:00", "C3"),
-                new Transaction("T5", 1200.0, "DEBIT", "2024-08-14T14:55:10", "C2"),
-                new Transaction("T6", 300.0, "CREDIT", "2024-08-15T15:05:20", "C3")
-        );
+
 //        System.out.println(Task2(people));
 //        System.out.println(Task3(people));
-        Task11(students);
+        Task15(students);
         //System.out.println(Task10(orders));
 
 
@@ -117,7 +110,47 @@ private static void Task9(List<Order> orders){
         students.stream().filter(s->s.getScores().stream().mapToInt(Integer::intValue).average().orElse(0)<=60).forEach(System.out::println);
     }
 //            2. Группировка и сортировка: Сгруппируйте студентов по группам и внутри каждой группы отсортируйте студентов по их среднему баллу по убыванию.
+   private static void Task12(List<Student> students){
+       Map<String, List<Student>> groupedAndSortedStudents = students.stream()
+               .collect(Collectors.groupingBy(Student::getGroup,
+                       Collectors.collectingAndThen(
+                               Collectors.toList(),
+                               list -> list.stream()
+                                       .sorted(Comparator.comparingDouble(Student::averageScore).reversed())
+                                       .collect(Collectors.toList())
+                       )
+               ));
+   }
 //            3. Поиск топ-студента: Найдите студента с самым высоким средним баллом в каждой группе.
+private static void Task13(List<Student> students){
+    Map<String, Optional<Student>> topStudentsByGroup = students.stream()
+            .collect(Collectors.groupingBy(Student::getGroup,
+                    Collectors.maxBy(Comparator.comparingDouble(Student::averageScore))
+            ));
+}
+
 //            4. Объединение: Соберите всех студентов в одну строку формата "Group: [group], Top Student: [name], Average Score: [averageScore]" и выведите список таких строк.
+private static void Task14(List<Student> students) {
+    List<String> result = students.stream()
+            .collect(Collectors.groupingBy(Student::getGroup,
+                    Collectors.maxBy(Comparator.comparingDouble(Student::averageScore))
+            ))
+            .entrySet().stream()
+            .map(entry -> {
+                String group = entry.getKey();
+                Student topStudent = entry.getValue().orElse(null);
+                return String.format("Group: %s, Top Student: %s, Average Score: %.2f",
+                        group,
+                        topStudent != null ? topStudent.getName() : "N/A",
+                        topStudent != null ? topStudent.averageScore() : 0.0);
+            })
+            .collect(Collectors.toList());
+    System.out.println(result);
+}
 //5. Поиск минимального значения: Найдите группу с наименьшим средним баллом среди всех студентов.
+    private static void Task15(List<Student> students) {
+       String s= students.stream().collect(Collectors.groupingBy(Student::getGroup,Collectors.averagingDouble(Student::averageScore)))
+                .entrySet().stream().min(Map.Entry.comparingByValue()).map(m->m.getKey()+" "+m.getValue()).orElse("no such group");
+        System.out.println(s);
+    }
 }

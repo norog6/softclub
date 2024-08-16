@@ -24,6 +24,9 @@ public class Student {
     public List<Integer> getScores() {
         return scores;
     }
+    public Double averageScore() {
+            return this.getScores().stream().mapToInt(Integer::intValue).average().orElse(0);
+    }
 
     public void setScores(List<Integer> scores) {
         this.scores = scores;
