@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class Lala {
     public static void main(String[] args) {
-        Task22();
+        Task19();
     }
 //1. Сравнение строк через ==: Напишите программу, которая создает две строки с одинаковым содержимым. Сравните их с помощью оператора ==.
     private static void Task1(){
@@ -207,6 +207,12 @@ private static void Task18(){
 }
 //19. Создание класса с неизменяемым полем String: Напишите класс, у которого есть приватное поле String, и метод для получения значения этого поля.
 // Убедитесь, что поле нельзя изменить после создания объекта.
+private static void Task19(){
+        RandomClass random=new RandomClass("Vasya",22);
+        String s=random.getName();
+        s="Stepa";
+    System.out.println(random);
+}
 //20. Реализация собственного пула строк: Напишите программу, которая реализует пул строк с использованием коллекции.
 // Реализуйте метод для добавления строки в пул и получения строки из пула.
     private static void Task20(){
@@ -238,10 +244,10 @@ private static void Task18(){
         Set<String> uniqueStrings = new HashSet<>();
 
         for (String str : s) {
-            // Интернируем строку
+
             String internedStr = str.intern();
 
-            // Если строка не была добавлена ранее, она уникальна
+
             if (allStrings.contains(internedStr)) {
                 uniqueStrings.remove(internedStr);
             } else {
@@ -254,7 +260,38 @@ private static void Task18(){
         }
     }
 //            23. Сравнение строк по лексикографическому порядку: Напишите программу, которая сравнивает две строки по лексикографическому порядку.
-//            24. Поиск подстроки в строке: Напишите программу, которая ищет подстроку в строке без использования стандартных библиотечных функций.
-//25. Глубокое копирование объектов со строками: Напишите программу, которая демонстрирует глубокое копирование объектов, содержащих строки. Убедитесь, что строки не изменяются при копировании.
+    private static void Task23(String s1,String s2){
+        int res=s1.compareTo(s2);
+        if (res < 0) {
+            System.out.println( s1 +  " меньше "  + s2 );
+        } else if (res == 0) {
+            System.out.println(s1 + " равно " + s2 );
+        } else {
+            System.out.println( s1 + " больше " + s2);
+        }
+    }
 
+
+//            24. Поиск подстроки в строке: Напишите программу, которая ищет подстроку в строке без использования стандартных библиотечных функций.
+    private static void Task24(String string, String subString){
+        int index=-1;
+        for(int i=0;i<string.length()-subString.length();i++){
+            for(int j=0;j<subString.length();j++){
+                if (string.charAt(i+j) != subString.charAt(j)){break;
+                }
+                if (j==subString.length()){
+                  index=1;
+                }
+            }
+        }
+        if(index!=-1){
+            System.out.println("Index of substring is:"+index);
+        }else System.out.println("no substring");
+    }
+//25. Глубокое копирование объектов со строками: Напишите программу, которая демонстрирует глубокое копирование объектов, содержащих строки. Убедитесь, что строки не изменяются при копировании.
+private static void Task25(){
+        String s1="banana";
+        String s2=new String(s1);
+    System.out.println(s1+" "+s2);
+}
 }
