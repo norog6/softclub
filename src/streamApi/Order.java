@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-public class Order  {
+public class Order {
     private int orderId;
     private LocalDate orderDate;
     private List<Product> products;
